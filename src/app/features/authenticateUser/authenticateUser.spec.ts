@@ -1,7 +1,7 @@
 import { StubAuthenticationGateway } from "../../dependencies/AuthenticationGateway/StubAuthenticationGateway";
 import { StubUserGateway } from "../../dependencies/UserGateway/StubUserGateway";
 import { SpyRequestConfigurator } from "../../dependencies/RequestConfigurator/SpyRequestConfigurator";
-import { ReduxStore, initReduxStore } from "../../store"
+import { initReduxStore } from "../../store"
 import { authenticateUser } from "./authenticateUser";
 import { testData } from "./testData";
 import { SpyStorageProvider } from "../../dependencies/StorageProvider/SpyStorageProvider";
@@ -17,8 +17,10 @@ describe("authenticateUser usecase", () => {
 
     authenticationGateway.feedWith(testData.validToken)
     userGateway.feedWith({ firstName: testData.firstName, lastName: testData.lastName, id: testData.userId })
-    const store: ReduxStore = initReduxStore({
-      authenticationGateway, requestConfigurator, userGateway, storageProvider
+    const store = initReduxStore({
+      dependencies: {
+        authenticationGateway, requestConfigurator, userGateway, storageProvider
+      }
     })
     const initialState = store.getState()
 

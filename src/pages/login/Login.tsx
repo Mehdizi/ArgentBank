@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import "./Login.scss";
 import { Layout } from "../../component/layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +18,9 @@ export const Login = () => {
     await dispatch(authenticateUser({ email: email, password: password }));
   };
 
-  if (isLogged) navigate("/profile");
+  useEffect(() => {
+    if (isLogged) navigate("/profile");
+  }, [isLogged, navigate]);
 
   return (
     <Layout>
@@ -30,6 +32,7 @@ export const Login = () => {
             <div className="input-wrapper">
               <label htmlFor="email">Email</label>
               <input
+                required
                 type="text"
                 id="email"
                 value={email}
@@ -39,6 +42,7 @@ export const Login = () => {
             <div className="input-wrapper">
               <label htmlFor="password">Password</label>
               <input
+                required
                 type="password"
                 id="password"
                 value={password}

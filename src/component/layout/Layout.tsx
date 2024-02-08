@@ -8,12 +8,11 @@ import { actualiseUserSession } from "../../app/features/actualiseUserSession/ac
 
 export const Layout = ({ children }: PropsWithChildren) => {
   const dispatch = useDispatch<ThunkAppDispatch>();
-
   useEffect(() => {
-    const isUserConnected = async () => {
+    const _actualiseUserSession = async () => {
       await dispatch(actualiseUserSession());
     };
-    isUserConnected();
+    _actualiseUserSession();
   }, []);
   return (
     <div className="layout-wrapper">

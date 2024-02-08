@@ -1,10 +1,11 @@
-import { Action, Store, ThunkDispatch, combineReducers, configureStore } from "@reduxjs/toolkit";
-import { userSlice } from "./slices/user";
+import { Action, Reducer, Store, ThunkDispatch, combineReducers, configureStore, } from "@reduxjs/toolkit";
 import { RequestConfigurator, UserGateway } from "./features/authenticateUser/authenticateUser";
 import { AuthenticationGateway } from "./dependencies/AuthenticationGateway/authenticationGateway";
 import { ChangeNameGateway } from "./features/changeNameUser/changeNameUser";
 import { StorageProvider } from "./dependencies/StorageProvider/StorageProvider";
 import { TokenGateway } from "./dependencies/TokenGateway/TokenGateway";
+import { userSlice } from "./slices/user";
+
 
 export interface Dependencies {
   storageProvider: StorageProvider,
@@ -15,18 +16,15 @@ export interface Dependencies {
   tokenGateway: TokenGateway
 }
 
-export const reducer = combineReducers({
+export const rootReducer = combineReducers({
   [userSlice.name]: userSlice.reducer,
 })
 
-export const initReduxStore = (dependencies: Partial<Dependencies>, preloadedState?: Partial<RootState>): ReduxStore => {
+export const initReduxStore = ({ dependencies, preloadedState, reducer = rootReducer }: { dependencies: Partial<Dependencies>, preloadedState?: RootState, reducer?: Reducer }): ReduxStore => {
   return configureStore({
     reducer,
     middleware(getDefaultMiddleware) {
       return getDefaultMiddleware({
-        serializableCheck: {
-          ignoredActions: ["persist/PERSIST"]
-        },
         thunk: {
           extraArgument: dependencies
         }
@@ -36,7 +34,7 @@ export const initReduxStore = (dependencies: Partial<Dependencies>, preloadedSta
   })
 }
 
-export type RootState = ReturnType<typeof reducer>;
+export type RootState = ReturnType<typeof rootReducer>;
 
 export type ReduxStore = Store<RootState> & {
   dispatch: ThunkAppDispatch;

@@ -40,6 +40,7 @@ export const EditNameForm = ({
         <div className="edit-name-champ">
           <label htmlFor="firstName"></label>
           <input
+            required
             placeholder={firstName}
             type="text"
             value={firstNameToChange}
@@ -50,6 +51,7 @@ export const EditNameForm = ({
         <div className="edit-name-champ">
           <label htmlFor="lastName"></label>
           <input
+            required
             placeholder={lastName}
             type="text"
             value={lastNameToChange}

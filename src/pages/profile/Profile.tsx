@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Profile.scss";
 import { Layout } from "../../component/layout/Layout";
-import { useDispatch, useSelector } from "react-redux";
-import { ThunkAppDispatch } from "../../app/store";
-import { actualiseUserSession } from "../../app/features/actualiseUserSession/actualiseUserSession";
+import { useSelector } from "react-redux";
 import { EditNameForm } from "../../component/editNameForm/EditNameForm";
 import { selectUser } from "../../app/selectors/nameSelector";
 import { selectUserLoginStatus } from "../../app/selectors/isLoggedSelector";
