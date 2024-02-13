@@ -13,14 +13,17 @@ export const actualiseUserSession = createAsyncThunk<User, void, {
     tokenGateway: TokenGateway;
     userGateway: UserGateway
   }
-}>("actualiseUserSession", async (_, { extra }) => {
+}>("actualiseUserSession", async (_, { extra, rejectWithValue, }) => {
   const storedToken = extra.storageProvider.retrieve({ key: "token" })
 
   const { validatedToken } = await extra.tokenGateway.verify(storedToken)
 
-  return (await extra.userGateway.loadProfile(validatedToken))
+  if (!validatedToken) {
+    extra.storageProvider.remove({ key: "token" })
+    return rejectWithValue("token expired")
+  }
 
-  // definir le token du request configurator pour gérer le cas d'erreur 
+  return (await extra.userGateway.loadProfile(validatedToken))
 })
 
 

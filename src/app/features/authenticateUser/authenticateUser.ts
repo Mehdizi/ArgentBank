@@ -27,16 +27,21 @@ export const authenticateUser = createAsyncThunk<User, AuthenticationProps, {
     requestConfigurator: RequestConfigurator;
   }
 }>("authenticateUser", async ({ email, password }, { extra }) => {
-  const { token } = await extra.authenticationGateway.login({
-    email,
-    password,
-  })
+  try {
+    const { token } = await extra.authenticationGateway.login({
+      email,
+      password,
+    })
 
-  const user = await extra.userGateway.loadProfile(token)
+    const user = await extra.userGateway.loadProfile(token)
 
-  extra.storageProvider.store({ key: "token", value: token })
-  extra.requestConfigurator.defineToken(token)
-  return user
+    extra.storageProvider.store({ key: "token", value: token })
+    extra.requestConfigurator.defineToken(token)
+
+    return user
+  } catch (e: any) {
+    throw new Error(e.response.status)
+  }
 })
 
 

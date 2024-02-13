@@ -25,6 +25,7 @@ export const initReduxStore = ({ dependencies, preloadedState, reducer = rootRed
     reducer,
     middleware(getDefaultMiddleware) {
       return getDefaultMiddleware({
+        ignoredActions: ["persist/PERSIST"],
         thunk: {
           extraArgument: dependencies
         }

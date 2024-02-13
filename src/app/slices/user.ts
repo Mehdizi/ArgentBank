@@ -1,9 +1,8 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { authenticateUser } from "../features/authenticateUser/authenticateUser";
 import { changeUserName } from "../features/changeNameUser/changeNameUser";
 import { actualiseUserSession } from "../features/actualiseUserSession/actualiseUserSession";
 import { logoutUser } from "../features/logoutUser/logoutUser";
-
 
 export type User = {
   id: string,
@@ -25,30 +24,10 @@ export const userSlice = createSlice({
   reducers: {
   },
   extraReducers: (builder) => {
-    builder.addCase(logoutUser.fulfilled, (state, action) => {
+    builder.addMatcher(isAnyOf(logoutUser.fulfilled, actualiseUserSession.rejected), (state, action) => {
       return initialState
     })
-    builder.addCase(authenticateUser.fulfilled, (state, action) => {
-      const { firstName, lastName, id } = action.payload
-      return {
-        isLogged: true,
-        firstName,
-        lastName,
-        id
-      }
-    })
-    builder.addCase(authenticateUser.rejected, (state, action) => {
-    })
-    builder.addCase(actualiseUserSession.fulfilled, (state, action) => {
-      const { firstName, lastName, id } = action.payload
-      return {
-        isLogged: true,
-        firstName,
-        lastName,
-        id
-      }
-    })
-    builder.addCase(changeUserName.fulfilled, (state, action) => {
+    builder.addMatcher(isAnyOf(authenticateUser.fulfilled, actualiseUserSession.fulfilled, changeUserName.fulfilled), (state, action) => {
       const { firstName, lastName, id } = action.payload
       return {
         isLogged: true,
@@ -58,6 +37,7 @@ export const userSlice = createSlice({
       }
     })
   }
+
 })
 
 

@@ -13,6 +13,7 @@ import { AxiosUserGateway } from "./app/dependencies/UserGateway/AxiosUserGatewa
 import { PersistGate } from "redux-persist/integration/react";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
@@ -41,10 +42,10 @@ const persistedStore = persistStore(store);
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate persistor={persistedStore}>
+    <PersistGate persistor={persistedStore}>
+      <Provider store={store}>
         <App />
-      </PersistGate>
-    </Provider>
+      </Provider>
+    </PersistGate>
   </React.StrictMode>
 );

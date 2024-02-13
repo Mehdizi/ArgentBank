@@ -9,7 +9,6 @@ describe("logoutUser", () => {
     const store = initReduxStore({ dependencies: { storageProvider }, preloadedState: { user: { id: "1234", firstName: "Gegar", lastName: "Mussassi", isLogged: true } } })
     const initialState = store.getState()
 
-
     await store.dispatch(logoutUser())
 
     expect(storageProvider.Args).toStrictEqual([])
