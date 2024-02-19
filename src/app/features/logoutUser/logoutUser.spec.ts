@@ -6,7 +6,7 @@ describe("logoutUser", () => {
   it("should logout the user", async () => {
     const storageProvider = new SpyStorageProvider()
     storageProvider.store({ key: "token", value: "fakeToken" })
-    const store = initReduxStore({ dependencies: { storageProvider }, preloadedState: { user: { id: "1234", firstName: "Gegar", lastName: "Mussassi", isLogged: true } } })
+    const store = initReduxStore({ dependencies: { storageProvider }, preloadedState: { user: { id: "1234", firstName: "firstNameTest", lastName: "lastNameTest", isLogged: true } } })
     const initialState = store.getState()
 
     await store.dispatch(logoutUser())

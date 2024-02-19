@@ -14,7 +14,6 @@ describe("authenticateUser usecase", () => {
     const requestConfigurator = new SpyRequestConfigurator()
     const userGateway = new StubUserGateway()
 
-
     authenticationGateway.feedWith(testData.validToken)
     userGateway.feedWith({ firstName: testData.firstName, lastName: testData.lastName, id: testData.userId })
     const store = initReduxStore({
@@ -43,24 +42,4 @@ describe("authenticateUser usecase", () => {
       }
     })
   })
-
-  // it("Should not authentificate if the password or the email is incorrect", async () => {
-  //   const authenticationGateway = new ExceptionAuthenticationGateway()
-  //   const { store, initialState } = initFixture(authenticationGateway)
-
-  //   await store.dispatch(authenticateUser({
-  //     email: testData.wrongEmail,
-  //     password: testData.wrongPassword
-  //   }))
-
-  //   expect(store.getState()).toStrictEqual({
-  //     ...initialState,
-  //     user: {
-  //       firstName: "",
-  //       lastName: "",
-  //       id: "",
-  //       isLogged: false
-  //     }
-  //   })
-  // })
 })

@@ -1,7 +1,7 @@
 export const testData = {
   userId: "1234",
-  firstName: "Foo",
-  lastName: "Bar",
+  firstName: "firstNameTest",
+  lastName: "lastNameTest",
   tokenKey: "token",
   validToken: "727727",
   validEmail: "foo@gmail.com",
