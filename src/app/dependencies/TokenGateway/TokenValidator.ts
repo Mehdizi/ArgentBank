@@ -1,3 +1,3 @@
-export interface TokenGateway {
+export interface TokenValidator {
   verify: (token: string) => Promise<{ validatedToken: string }>
 }

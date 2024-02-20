@@ -10,7 +10,6 @@ export class AxiosAuthenticationGateway implements AuthenticationGateway {
         email, password
       })).data.body.token
     }
-
   }
 }
 

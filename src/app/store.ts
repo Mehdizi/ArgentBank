@@ -1,19 +1,18 @@
 import { Action, Reducer, Store, ThunkDispatch, combineReducers, configureStore, } from "@reduxjs/toolkit";
-import { RequestConfigurator, UserGateway } from "./features/authenticateUser/authenticateUser";
+import { UserGateway } from "./features/authenticateUser/authenticateUser";
 import { AuthenticationGateway } from "./dependencies/AuthenticationGateway/authenticationGateway";
-import { ChangeNameGateway } from "./features/changeNameUser/changeNameUser";
 import { StorageProvider } from "./dependencies/StorageProvider/StorageProvider";
-import { TokenGateway } from "./dependencies/TokenGateway/TokenGateway";
+import { TokenValidator } from "./dependencies/TokenGateway/TokenValidator";
 import { userSlice } from "./slices/user";
+import { EditUserNameGateway } from "./dependencies/EditUserName/EditUserNameGateway";
 
 
 export interface Dependencies {
   storageProvider: StorageProvider,
   userGateway: UserGateway,
-  changeNameGateway: ChangeNameGateway,
+  editUserNameGateway: EditUserNameGateway,
   authenticationGateway: AuthenticationGateway,
-  requestConfigurator: RequestConfigurator
-  tokenGateway: TokenGateway
+  tokenValidator: TokenValidator
 }
 
 export const rootReducer = combineReducers({

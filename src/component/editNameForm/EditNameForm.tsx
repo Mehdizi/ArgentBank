@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./EditNameForm.scss";
 import { useDispatch } from "react-redux";
 import { ThunkAppDispatch } from "../../app/store";
-import { changeUserName } from "../../app/features/changeNameUser/changeNameUser";
+import { editUserName } from "../../app/features/editUserName/editUserName";
 
 export const EditNameForm = ({
   toggleForm,
@@ -25,7 +25,7 @@ export const EditNameForm = ({
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await dispatch(
-      changeUserName({
+      editUserName({
         newFirstName: firstNameToChange,
         newLastName: lastNameToChange,
       })

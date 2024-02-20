@@ -5,10 +5,9 @@ import App from "./App";
 import { Provider } from "react-redux";
 import { initReduxStore, rootReducer } from "./app/store";
 import { AxiosAuthenticationGateway } from "./app/dependencies/AuthenticationGateway/AxiosAuthenticationGateway";
-import { SpyRequestConfigurator } from "./app/dependencies/RequestConfigurator/SpyRequestConfigurator";
-import { AxiosChangeNameGateway } from "./app/dependencies/EditName/AxiosChangeNameGateway";
+import { AxiosEditUserNameGateway } from "./app/dependencies/EditUserName/AxiosEditUserNameGateway";
 import { LocalStorageProvider } from "./app/dependencies/StorageProvider/LocalStorageProvider";
-import { AxiosTokenGateway } from "./app/dependencies/TokenGateway/AxiosRefreshGateway";
+import { LocalTokenValidator } from "./app/dependencies/TokenGateway/LocalTokenValidator";
 import { AxiosUserGateway } from "./app/dependencies/UserGateway/AxiosUserGateway";
 import { PersistGate } from "redux-persist/integration/react";
 import storage from "redux-persist/lib/storage";
@@ -30,10 +29,9 @@ const store = initReduxStore({
   dependencies: {
     userGateway: new AxiosUserGateway(),
     storageProvider: new LocalStorageProvider(),
-    changeNameGateway: new AxiosChangeNameGateway(),
-    tokenGateway: new AxiosTokenGateway(),
+    editUserNameGateway: new AxiosEditUserNameGateway(),
+    tokenValidator: new LocalTokenValidator(),
     authenticationGateway: new AxiosAuthenticationGateway(),
-    requestConfigurator: new SpyRequestConfigurator(),
   },
   reducer: persistedReducer,
 });

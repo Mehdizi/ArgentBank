@@ -3,20 +3,20 @@ import { RootState } from "../../store";
 import { User } from "../../slices/user";
 import { StorageProvider } from "../../dependencies/StorageProvider/StorageProvider";
 import { UserGateway } from "../authenticateUser/authenticateUser";
-import { TokenGateway } from "../../dependencies/TokenGateway/TokenGateway";
+import { TokenValidator } from "../../dependencies/TokenGateway/TokenValidator";
 
 
 export const actualiseUserSession = createAsyncThunk<User, void, {
   state: RootState,
   extra: {
     storageProvider: StorageProvider
-    tokenGateway: TokenGateway;
+    tokenValidator: TokenValidator;
     userGateway: UserGateway
   }
 }>("actualiseUserSession", async (_, { extra, rejectWithValue, }) => {
   const storedToken = extra.storageProvider.retrieve({ key: "token" })
 
-  const { validatedToken } = await extra.tokenGateway.verify(storedToken)
+  const { validatedToken } = await extra.tokenValidator.verify(storedToken)
 
   if (!validatedToken) {
     extra.storageProvider.remove({ key: "token" })

@@ -24,7 +24,6 @@ export const authenticateUser = createAsyncThunk<User, AuthenticationProps, {
     authenticationGateway: AuthenticationGateway
     storageProvider: StorageProvider
     userGateway: UserGateway;
-    requestConfigurator: RequestConfigurator;
   }
 }>("authenticateUser", async ({ email, password }, { extra }) => {
   try {
@@ -36,7 +35,6 @@ export const authenticateUser = createAsyncThunk<User, AuthenticationProps, {
     const user = await extra.userGateway.loadProfile(token)
 
     extra.storageProvider.store({ key: "token", value: token })
-    extra.requestConfigurator.defineToken(token)
 
     return user
   } catch (e: any) {

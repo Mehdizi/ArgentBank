@@ -1,6 +1,5 @@
 import { StorageItem, StorageProvider } from "./StorageProvider";
 
-
 export class SpyStorageProvider implements StorageProvider {
   private args = new Map<StorageItem["key"], StorageItem["value"]>()
 
@@ -9,9 +8,8 @@ export class SpyStorageProvider implements StorageProvider {
   }
 
   retrieve({ key }: Pick<StorageItem, "key">) {
-    return ""
+    return this.args.get(key)!
   }
-
 
   store(storageItem: StorageItem) {
     this.args.set(storageItem.key, storageItem.value)

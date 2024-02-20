@@ -1,7 +1,7 @@
-import { TokenGateway } from "./TokenGateway";
+import { TokenValidator } from "./TokenValidator";
 import isJwtTokenExpired from 'jwt-check-expiry';
 
-export class AxiosTokenGateway implements TokenGateway {
+export class LocalTokenValidator implements TokenValidator {
   async verify(token: string) {
     return { validatedToken: !isJwtTokenExpired(token) ? token : "", }
   }

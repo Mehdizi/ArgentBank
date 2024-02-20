@@ -1,6 +1,5 @@
 import { StubAuthenticationGateway } from "../../dependencies/AuthenticationGateway/StubAuthenticationGateway";
 import { StubUserGateway } from "../../dependencies/UserGateway/StubUserGateway";
-import { SpyRequestConfigurator } from "../../dependencies/RequestConfigurator/SpyRequestConfigurator";
 import { initReduxStore } from "../../store"
 import { authenticateUser } from "./authenticateUser";
 import { testData } from "./testData";
@@ -11,14 +10,13 @@ describe("authenticateUser usecase", () => {
   it("should authenticate user given correct username and password", async () => {
     const storageProvider = new SpyStorageProvider()
     const authenticationGateway = new StubAuthenticationGateway()
-    const requestConfigurator = new SpyRequestConfigurator()
     const userGateway = new StubUserGateway()
 
     authenticationGateway.feedWith(testData.validToken)
     userGateway.feedWith({ firstName: testData.firstName, lastName: testData.lastName, id: testData.userId })
     const store = initReduxStore({
       dependencies: {
-        authenticationGateway, requestConfigurator, userGateway, storageProvider
+        authenticationGateway, userGateway, storageProvider
       }
     })
     const initialState = store.getState()
@@ -29,8 +27,6 @@ describe("authenticateUser usecase", () => {
     }))
 
     expect(storageProvider.Args).toStrictEqual([{ key: testData.tokenKey, value: testData.validToken }])
-
-    expect(requestConfigurator.Args).toStrictEqual([testData.validToken])
 
     expect(store.getState()).toStrictEqual({
       ...initialState,
