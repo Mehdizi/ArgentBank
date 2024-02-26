@@ -7,12 +7,6 @@ import { actualiseUserSession } from "./actualiseUserSession"
 
 describe("actualise user session", () => {
   it("should actualise the user session if the token is valdid", async () => {
-    // storage provider
-    // token gateway
-    // userGateway
-    // récup le token du localstorage
-    // vérifie le token via le tokenGateway
-    // fais le call http ou reset le user en fonction
     const storageProvider = new SpyStorageProvider()
     const tokenValidator = new StubLocalTokenValidator()
     const userGateway = new StubUserGateway()
@@ -33,9 +27,5 @@ describe("actualise user session", () => {
       }
     })
   }
-    // it("should reset the user if the token is invalid", () => {
-
-    // })
-
   )
 })
